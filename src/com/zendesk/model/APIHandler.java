@@ -17,6 +17,7 @@ public class APIHandler {
 	//Get the tickets
 	public JSONObject getTickets(){
 		//connect to API and get the tickets in JSON format
+		System.out.println("SYSTEM STATUS: Fetching Tickets, please wait...");
 		JSONObject ticketsJSON = new JSONObject();
 		ticketsJSON = connectToAPI();
 		
@@ -30,12 +31,12 @@ public class APIHandler {
 	//connect to the API and handle API issues
 	public JSONObject connectToAPI(){
 		
-		//information
+		//connection information
 		String subdomain = "TrialCompanyName";
 		String email_address = "sarah.giapitzakis@gmail.com";
 		String password = "ZadowSapherelis44!";
 		String stringURL = "https://"+ subdomain +".zendesk.com/api/v2/tickets.json";
-		
+		String basicAuth = "";
 		JSONObject ticketsJSON = new JSONObject();
 		
 		//connecting
@@ -44,10 +45,11 @@ public class APIHandler {
 			//initialize url and connection object
 			url = new URL(stringURL);
 			URLConnection urlConnection = url.openConnection();
+
+			//encode authentication details
+			basicAuth = basicAuthentication(email_address, password);
 			
-			//authenticating administration details
-			String userAuthentication = email_address + ":" + password;
-			String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userAuthentication.getBytes());
+			//set authentication details
 			urlConnection.setRequestProperty ("Authorization", basicAuth);
 		
 			//connect to the URL with authorization
@@ -63,27 +65,44 @@ public class APIHandler {
 			//cast to a JSON object
 			ticketsJSON = new JSONObject(result);
 			
-			//System.out.println(ticketsJSON);
-			
 		} catch (MalformedURLException e) {
 			System.out.println("ERROR: Failed connection. Malformed URL.");
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 		} catch (IOException e) {
 			System.out.println("ERROR: Couldn't authenticate you.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
-
 		//return JSON
 		return ticketsJSON;
+	}
+	
+	//encode the user details with basic authentication
+	public String basicAuthentication(String email_address, String password){
+		String basicAuth = "";
+		
+		//authenticating administration details
+		String userAuthentication = email_address + ":" + password;
+		basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userAuthentication.getBytes());
+		
+		return basicAuth;
 	}
 	
 	//format the JSON
 	public JSONObject formatJSON(JSONObject ticketsJSON){
 		//format the tickets into a display-able format
-		//doesn't actually do anything yet but it will!
+		JSONArray tickets = new JSONArray();
+		tickets = ticketsJSON.getJSONArray("tickets");
+		System.out.println(tickets.get(0));
+		System.out.println(tickets.get(1));
+		System.out.println(tickets.get(2));
 		return ticketsJSON;
+	}
+	
+	public void displayTickets(JSONObject ticketsJSON){
+		
+		return;
 	}
 	
 }
