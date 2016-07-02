@@ -57,14 +57,17 @@ public class MenuHandler {
 	
 	public void displayAllTickets(){
 		APIHandler api = new APIHandler();
-		JSONObject ticketsJSON = api.getTickets();
+		JSONObject ticketsJSON = api.getAllTickets();
 		api.displayTickets(ticketsJSON);
 		return;
 	}
 	
 	public void displaySingleTicket(){
+		String id = "";
+		id = getInput();
+		
 		APIHandler api = new APIHandler();
-		JSONObject ticketsJSON = api.getTickets();
+		JSONObject ticketsJSON = api.getTicketByID(id);
 		api.displayTickets(ticketsJSON);
 		return;
 	}
