@@ -21,13 +21,30 @@ import org.jsoup.Jsoup;
 public class APIHandler {
 
 	//Get the tickets
-	public JSONObject getTickets(){
+	public JSONObject getAllTickets(){
 		//connect to API and get the tickets in JSON format
 		System.out.println("SYSTEM STATUS: Fetching Tickets, please wait...");
 		JSONObject ticketsJSON = new JSONObject();
+		boolean multi = true;
 		
 		//get tickets JSON
-		ticketsJSON = connectToAPI();
+		ticketsJSON = connectToAPI(multi, "");
+		
+		//format the tickets into neater JSON
+		ticketsJSON = formatJSON(ticketsJSON);
+				
+		//return the formatted tickets
+		return ticketsJSON;
+	}
+	
+	public JSONObject getTicketByID(String ticketID){
+		//connect to API and get the individual ticket
+		System.out.println("SYSTEM STATUS: Fetching Ticket " + ticketID + ", please wait...");
+		JSONObject ticketsJSON = new JSONObject();
+		boolean multi = false;
+		
+		//get tickets JSON
+		ticketsJSON = connectToAPI(multi, ticketID);
 		
 		//format the tickets into neater JSON
 		ticketsJSON = formatJSON(ticketsJSON);
@@ -37,13 +54,20 @@ public class APIHandler {
 	}
 	
 	//connect to the API and handle API issues
-	public JSONObject connectToAPI(){
+	public JSONObject connectToAPI(boolean multi, String id){
 		
 		//connection information
 		String subdomain = "TrialCompanyName";
 		String email_address = "sarah.giapitzakis@gmail.com";
 		String password = "ZadowSapherelis44!";
-		String stringURL = "https://"+ subdomain +".zendesk.com/api/v2/tickets.json";
+		String stringURL = "";
+		if(multi == true){
+			stringURL = "https://"+ subdomain +".zendesk.com/api/v2/tickets.json";
+		}else if(multi == false){
+			stringURL = "https://"+ subdomain +".zendesk.com/api/v2/tickets/"+ id +".json";
+			
+		}
+		
 		String basicAuth = "";
 		JSONObject ticketsJSON = new JSONObject();
 		
