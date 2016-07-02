@@ -68,7 +68,7 @@ public class MenuHandler {
 		
 		APIHandler api = new APIHandler();
 		JSONObject ticketsJSON = api.getTicketByID(id);
-		api.displayTickets(ticketsJSON);
+		api.displaySingleTicket(ticketsJSON);
 		return;
 	}
 }

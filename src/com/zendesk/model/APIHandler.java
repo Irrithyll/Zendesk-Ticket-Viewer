@@ -20,7 +20,7 @@ import org.jsoup.Jsoup;
 
 public class APIHandler {
 
-	//Get the tickets
+	//Get ALL the tickets
 	public JSONObject getAllTickets(){
 		//connect to API and get the tickets in JSON format
 		System.out.println("SYSTEM STATUS: Fetching Tickets, please wait...");
@@ -37,6 +37,7 @@ public class APIHandler {
 		return ticketsJSON;
 	}
 	
+	//Get a SINGULAR ticket by ID
 	public JSONObject getTicketByID(String ticketID){
 		//connect to API and get the individual ticket
 		System.out.println("SYSTEM STATUS: Fetching Ticket " + ticketID + ", please wait...");
@@ -162,6 +163,15 @@ public class APIHandler {
 				" updated " + ticketsArr.getJSONObject(i).getString("updated_at"));
 		}
 		return;
+	}
+	
+	public void displaySingleTicket(JSONObject ticketsJSON){
+		//display the ticket information
+		System.out.println("T" + ticketsJSON.getInt("id") +
+			" (" + ticketsJSON.getString("status") + ")" + 
+			" subject '" + ticketsJSON.getString("subject") + "'" +
+			" opened by " + ticketsJSON.getInt("requester_id") +
+			" updated " + ticketsJSON.getString("updated_at"));
 	}
 	
 }
