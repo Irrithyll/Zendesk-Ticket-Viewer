@@ -5,9 +5,15 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
@@ -19,11 +25,13 @@ public class APIHandler {
 		//connect to API and get the tickets in JSON format
 		System.out.println("SYSTEM STATUS: Fetching Tickets, please wait...");
 		JSONObject ticketsJSON = new JSONObject();
+		
+		//get tickets JSON
 		ticketsJSON = connectToAPI();
 		
 		//format the tickets into neater JSON
 		ticketsJSON = formatJSON(ticketsJSON);
-		
+				
 		//return the formatted tickets
 		return ticketsJSON;
 	}
@@ -92,16 +100,43 @@ public class APIHandler {
 	//format the JSON
 	public JSONObject formatJSON(JSONObject ticketsJSON){
 		//format the tickets into a display-able format
-		JSONArray tickets = new JSONArray();
-		tickets = ticketsJSON.getJSONArray("tickets");
-		System.out.println(tickets.get(0));
-		System.out.println(tickets.get(1));
-		System.out.println(tickets.get(2));
+		JSONArray ticketsArr = new JSONArray();
+		ticketsArr = ticketsJSON.getJSONArray("tickets");
+		
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		Date date = new Date();
+		String dateStr = "";
+		
+		//go over each JSON array object and get data
+		for(int i = 0; i < ticketsArr.length(); i++){			
+			//format the date of the ticket for display
+			try {
+				date = format.parse(ticketsArr.getJSONObject(i).getString("updated_at"));
+				dateStr = date.toString();
+			} catch (ParseException e) {
+				System.out.println("ERROR: There was an issue regarding the last updated date on one of the tickets. Skipping Ticket...");
+				continue;
+			}
+		
+			//set formatted date in JSON Object
+			ticketsJSON.getJSONArray("tickets").getJSONObject(i).put("updated_at", dateStr);
+		
+		}
 		return ticketsJSON;
 	}
 	
 	public void displayTickets(JSONObject ticketsJSON){
+		JSONArray ticketsArr = new JSONArray();
+		ticketsArr = ticketsJSON.getJSONArray("tickets");
 		
+		for(int i = 0; i < ticketsArr.length(); i++){
+			//display the ticket information
+			System.out.println("T" + ticketsArr.getJSONObject(i).getInt("id") +
+				" (" + ticketsArr.getJSONObject(i).getString("status") + ")" + 
+				" subject '" + ticketsArr.getJSONObject(i).getString("subject") + "'" +
+				" opened by " + ticketsArr.getJSONObject(i).getInt("requester_id") +
+				" updated " + ticketsArr.getJSONObject(i).getString("updated_at"));
+		}
 		return;
 	}
 	
