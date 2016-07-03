@@ -19,6 +19,8 @@ import org.jsoup.Jsoup;
 
 
 public class APIHandler {
+	//a date format to follow
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
 
 	//Get ALL the tickets
 	public JSONObject getAllTickets(){
@@ -31,7 +33,7 @@ public class APIHandler {
 		ticketsJSON = connectToAPI(multi, "");
 		
 		//format the tickets into neater JSON
-		ticketsJSON = formatJSON(ticketsJSON);
+		ticketsJSON = formatMultiJSON(ticketsJSON);
 				
 		//return the formatted tickets
 		return ticketsJSON;
@@ -48,7 +50,7 @@ public class APIHandler {
 		ticketsJSON = connectToAPI(multi, ticketID);
 		
 		//format the tickets into neater JSON
-		ticketsJSON = formatJSON(ticketsJSON);
+		ticketsJSON = formatSingleJSON(ticketsJSON);
 				
 		//return the formatted tickets
 		return ticketsJSON;
@@ -123,12 +125,14 @@ public class APIHandler {
 	}
 	
 	//format the JSON
-	public JSONObject formatJSON(JSONObject ticketsJSON){
+	public JSONObject formatMultiJSON(JSONObject ticketsJSON){
 		//format the tickets into a display-able format
 		JSONArray ticketsArr = new JSONArray();
 		ticketsArr = ticketsJSON.getJSONArray("tickets");
+		int fetchedID = -1;
+		String formattedID = "";
 		
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		//DateFormat format = new SimpleDateFormat("YYYY'-'MM'-'dd'T'HH':'mm':'ss'Z'", Locale.ENGLISH);
 		Date date = new Date();
 		String dateStr = "";
 		
@@ -136,42 +140,99 @@ public class APIHandler {
 		for(int i = 0; i < ticketsArr.length(); i++){			
 			//format the date of the ticket for display
 			try {
-				date = format.parse(ticketsArr.getJSONObject(i).getString("updated_at"));
+				date = dateFormat.parse(ticketsArr.getJSONObject(i).getString("updated_at"));
 				dateStr = date.toString();
 			} catch (ParseException e) {
 				System.out.println("ERROR: There was an issue regarding the last updated date on one of the tickets. Skipping Ticket...");
 				continue;
 			}
-		
-			//set formatted date in JSON Object
+			
+			//format requester_id
+			fetchedID = ticketsArr.getJSONObject(i).getInt("requester_id");
+			formattedID = formatRequesterID(fetchedID);
+			
+			//set formatted data in JSON Object
+			ticketsJSON.getJSONArray("tickets").getJSONObject(i).put("requester_id", formattedID);
 			ticketsJSON.getJSONArray("tickets").getJSONObject(i).put("updated_at", dateStr);
 		
 		}
 		return ticketsJSON;
 	}
 	
+	public JSONObject formatSingleJSON(JSONObject ticketsJSON){
+		//format the tickets into a display-able format
+		JSONObject ticket = new JSONObject();
+		ticket = ticketsJSON.getJSONObject("ticket");
+		
+		int fetchedID = -1;
+		String formattedID = "";
+		
+		//DateFormat format = new SimpleDateFormat("YYYY-MM-DD'T'mm:ss:SS'Z'", Locale.ENGLISH);
+		Date date = new Date();
+		String dateStr = "";
+	
+		//format the date of the ticket for display
+		try {
+			date = dateFormat.parse(ticket.getString("updated_at"));
+			dateStr = date.toString();
+		} catch (ParseException e) {
+			System.out.println("ERROR: There was an issue regarding the last updated date on one of the tickets. Date may not appear correctly.");
+		}
+		
+		//format requester_id
+		fetchedID = ticket.getInt("requester_id");
+		formattedID = formatRequesterID(fetchedID);
+		
+		//set formatted data in JSON Object
+		ticket.put("requester_id", formattedID);
+		ticket.put("updated_at", dateStr);
+		
+		return ticket;
+	}
+	
+	
+	public String formatRequesterID(int requester_id){
+		String strReqID = "";
+		strReqID = Integer.toString(requester_id);
+		strReqID = strReqID.replace("-", "");
+		return strReqID;
+		
+	}
+
+	
 	public void displayTickets(JSONObject ticketsJSON){
 		JSONArray ticketsArr = new JSONArray();
 		ticketsArr = ticketsJSON.getJSONArray("tickets");
 		
-		for(int i = 0; i < ticketsArr.length(); i++){
+		int pageLimit = 25;
+		if(ticketsArr.length() < pageLimit){
+			pageLimit = ticketsArr.length();
+		}
+		
+		for(int i = 0; i < pageLimit; i++){
 			//display the ticket information
-			System.out.println("T" + ticketsArr.getJSONObject(i).getInt("id") +
-				" (" + ticketsArr.getJSONObject(i).getString("status") + ")" + 
-				" subject '" + ticketsArr.getJSONObject(i).getString("subject") + "'" +
-				" opened by " + ticketsArr.getJSONObject(i).getInt("requester_id") +
-				" updated " + ticketsArr.getJSONObject(i).getString("updated_at"));
+			printTicket(ticketsArr.getJSONObject(i).getInt("id"),
+					ticketsArr.getJSONObject(i).getString("status"),
+					ticketsArr.getJSONObject(i).getString("subject"),
+					ticketsArr.getJSONObject(i).getInt("requester_id"),
+					ticketsArr.getJSONObject(i).getString("updated_at"));
 		}
 		return;
 	}
 	
 	public void displaySingleTicket(JSONObject ticketsJSON){
 		//display the ticket information
-		System.out.println("T" + ticketsJSON.getInt("id") +
-			" (" + ticketsJSON.getString("status") + ")" + 
-			" subject '" + ticketsJSON.getString("subject") + "'" +
-			" opened by " + ticketsJSON.getInt("requester_id") +
-			" updated " + ticketsJSON.getString("updated_at"));
+		printTicket(ticketsJSON.getInt("id"), ticketsJSON.getString("status"),
+				ticketsJSON.getString("subject"), ticketsJSON.getInt("requester_id"),
+				ticketsJSON.getString("updated_at"));
+	}
+	
+	public void printTicket(int id, String status, String subject, int requester_id, String updated_at){
+		System.out.println("Ticket " + id +
+				" [" + status + "]" + 
+				" subject '" + subject + "'" +
+				" opened by " + requester_id +
+				" updated " + updated_at);
 	}
 	
 }
