@@ -4,6 +4,7 @@ import java.util.Scanner;
 import org.json.JSONObject;
 
 import com.zendesk.view.MainView;
+import com.zendesk.view.TicketView;
 
 public class MenuHandler {
 	MainView view = new MainView();
@@ -79,12 +80,13 @@ public class MenuHandler {
 	
 	public void displayAllTickets(){
 		APIHandler api = new APIHandler(); //connect to api
+		TicketView ticketV = new TicketView();
 		String input = "";
 		int pageNumber = 1;
 		
 		JSONObject ticketsJSON = api.getAllTickets(); //get the tickets
 		
-		pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display current ticket page
+		pageNumber = ticketV.displayTickets(ticketsJSON, pageNumber); //display current ticket page
 		
 		while(true){
 			input = getInput();
@@ -93,10 +95,10 @@ public class MenuHandler {
 				break; //return to menu
 			}else if(input.contains("n")){
 				pageNumber++;
-				pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display next ticket page
+				pageNumber = ticketV.displayTickets(ticketsJSON, pageNumber); //display next ticket page
 			}else if(input.contains("b")){
 				pageNumber--;
-				pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display previous ticket page
+				pageNumber = ticketV.displayTickets(ticketsJSON, pageNumber); //display previous ticket page
 			}else{
 				view.invalidPageCommand();
 				//api.displayTickets(ticketsJSON, offset); //display current ticket page
@@ -109,6 +111,7 @@ public class MenuHandler {
 	public void displaySingleTicket(){
 		String id = "";
 		JSONObject ticketsJSON = new JSONObject();
+		TicketView ticketV = new TicketView();
 		
 		view.askTicketID();
 		id = getInput();
@@ -121,7 +124,7 @@ public class MenuHandler {
 			return;
 		}
 		
-		api.displaySingleTicket(ticketsJSON); //display the ticket
+		ticketV.displaySingleTicket(ticketsJSON); //display the ticket
 		
 		return;
 	}
