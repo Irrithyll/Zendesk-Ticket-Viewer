@@ -53,7 +53,6 @@ public class APIHandler {
 		//get tickets JSON
 		ticketsJSON = connectToAPI(multi, ticketID);
 		
-		//format the tickets into neater JSON
 		ticketsJSON = formatSingleJSON(ticketsJSON);
 				
 		//return the formatted tickets
@@ -61,7 +60,7 @@ public class APIHandler {
 	}
 	
 	//connect to the API and handle API issues
-	public JSONObject connectToAPI(boolean multi, String id){
+	public JSONObject connectToAPI(boolean multi, String id) {
 		
 		//connection information
 		String subdomain = "TrialCompanyName";
@@ -109,7 +108,7 @@ public class APIHandler {
 			System.out.println("ERROR: Failed connection. Malformed URL.");
 			return null;
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("ERROR: Ooops! Something went wrong fetching your ticket(s).");
 			return null;
 		}
@@ -182,6 +181,7 @@ public class APIHandler {
 			dateStr = date.toString();
 		} catch (ParseException e) {
 			System.out.println("ERROR: There was an issue regarding the last updated date on one of the tickets. Date may not appear correctly.");
+			return null;
 		}
 		
 		//format requester_id
