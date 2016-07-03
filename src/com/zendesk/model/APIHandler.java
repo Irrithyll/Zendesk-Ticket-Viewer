@@ -38,7 +38,7 @@ public class APIHandler {
 		
 		//format the tickets into neater JSON
 		ticketsJSON = formatMultiJSON(ticketsJSON);
-				
+		
 		//return the formatted tickets
 		return ticketsJSON;
 	}
@@ -107,11 +107,11 @@ public class APIHandler {
 			
 		} catch (MalformedURLException e) {
 			System.out.println("ERROR: Failed connection. Malformed URL.");
-			//e.printStackTrace();
+			return null;
 			
 		} catch (IOException e) {
 			System.out.println("ERROR: Ooops! Something went wrong fetching your ticket(s).");
-			//e.printStackTrace();
+			return null;
 		}
 		
 		//return JSON

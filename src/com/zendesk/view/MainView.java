@@ -9,10 +9,10 @@ public class MainView {
 	private String[] menuOptions = {"Display All Tickets","Display A Single Ticket","Quit Program"};
 	private String welcomeMsg = "Hello and welcome to the Zendesk ticket viewer!";
 	private String welcomeInstructions = "Please type menu to view the menu, or q to quit the program: ";
-	private String menuHeader = "---------------------------------\nMenu\n---------------------------------";
+	private String menuHeader = "---------------------------------\nMenu:";
 	private String menuInstructions = "Please type a number to select a menu option (or type q to quit): ";
 	//private String confirmExit = "Are you sure you wish exit the program? (y / n): ";
-	private String quitMsg = "Program Exiting...";
+	private String quitMsg = "Thanks for using this Zendesk Ticket Viewer! Farewell~";
 	private String unrecognizedInputErr = "Error: Unrecognized input, please enter your selection again: ";
 	private String askTicketID = "Please enter a ticket ID: ";
 	private String invalidTicketID = "Invalid ticket ID, please try again. (or type menu to return to the menu)";
