@@ -79,11 +79,27 @@ public class MenuHandler {
 	
 	public void displayAllTickets(){
 		APIHandler api = new APIHandler(); //connect to api
+		String input = "";
 		
 		JSONObject ticketsJSON = api.getAllTickets(); //get the tickets
 		
-		api.displayTickets(ticketsJSON); //display the tickets
+		api.displayTickets(ticketsJSON, 0); //display current ticket page
 		
+		while(true){
+			input = getInput();
+			
+			if(input.contains("q") || input.contains("menu")){
+				break;
+			}else if(input.contains("n")){
+				api.displayTickets(ticketsJSON, +1); //display next ticket page
+			}else if(input.contains("b")){
+				api.displayTickets(ticketsJSON, -1); //display previous ticket page
+			}else{
+				view.invalidPageCommand();
+				api.displayTickets(ticketsJSON, 0); //display current ticket page
+			}
+			input = "";
+		}
 		return;
 	}
 	
