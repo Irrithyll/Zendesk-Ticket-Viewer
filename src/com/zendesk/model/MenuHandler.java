@@ -23,18 +23,18 @@ public class MenuHandler {
 
 		while(true){
 			
-			//display the menu and recieve input
+			//display the menu and receive input
 			view.printMainMenu();
 			input = menu.getInput();
 			
 			//check input and act accordingly
-			if(input.contains("1")){
+			if(input.contains("1")){ //Display All Tickets
 				displayAllTickets();
 			}
-			else if (input.contains("2")){
+			else if (input.contains("2")){ //Display A Single Ticket
 				displaySingleTicket();
 			}
-			else if (input.contains("3") || input.contains("q")){
+			else if (input.contains("3") || input.contains("q")){ //Quit Program
 				view.quit();
 				return;
 			}
@@ -51,7 +51,23 @@ public class MenuHandler {
 	}
 	
 	public void runWelcomeMenu(){
+		MainView view = new MainView();
+		MenuHandler menu = new MenuHandler();
+		String input = "";
 		
+		view.printWelcome();
+		input = menu.getInput();
+		
+		while(true){
+			if(input.contains("menu")){
+				runMainMenu();
+				return;
+				
+			}else if(input.contains("q")){
+				view.quit();
+				return;
+			}
+		}
 		
 	}
 	
