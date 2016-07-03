@@ -1,6 +1,9 @@
 package com.zendesk.view;
 
-
+/*
+ * The MainView contains common messages displayed to the user so that they 
+ * can be re-used in methods and altered in a more efficient manner.
+ */
 public class MainView {
 
 	private String[] menuOptions = {"Display All Tickets","Display A Single Ticket","Quit Program"};

@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /*
- * The API Handler does as the name suggests, it handles connecting
+ * The APIHandler does as the name suggests, it handles connecting
  * to the Zendesk servers, fetching ticket information, as well as
  * formatting the data.
  */

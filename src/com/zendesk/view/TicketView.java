@@ -3,6 +3,9 @@ package com.zendesk.view;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/*
+ * The TicketView handles all display and presentation of ticket information.
+ */
 public class TicketView {
 	
 	private static int PAGE_LIMIT = 25; //max tickets to display per page
@@ -24,8 +27,6 @@ public class TicketView {
 		
 		int ticketsOnPage = 0;
 		int offset = (pageNumber - 1)*PAGE_LIMIT;
-		
-
 		
 		for(int i = 0+offset; i < PAGE_LIMIT+offset; i++){
 			//check we haven't run out of tickets to display
