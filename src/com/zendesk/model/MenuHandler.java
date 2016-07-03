@@ -6,27 +6,26 @@ import org.json.JSONObject;
 import com.zendesk.view.MainView;
 
 public class MenuHandler {
-
+	MainView view = new MainView();
+	private Scanner sc;
+	//MenuHandler menu = new MenuHandler();
+	
 	public String getInput(){
-		Scanner sc = new Scanner(System.in);
+		sc = new Scanner(System.in);
 		String input = "";
 		input = sc.next();
-		sc.close();
 		return input;
 	}
 	
 	public void runMainMenu(){
-		MainView view = new MainView();
-		MenuHandler menu = new MenuHandler();
-
-		String input = "";
 		
-
+		String input = "";
+	
 		while(true){
 			
 			//display the menu and receive input
 			view.printMainMenu();
-			input = menu.getInput();
+			input = getInput();
 			
 			//check input and act accordingly
 			if(input.contains("1")){ //Display All Tickets
@@ -53,11 +52,11 @@ public class MenuHandler {
 	
 	public void runWelcomeMenu(){
 		MainView view = new MainView();
-		MenuHandler menu = new MenuHandler();
+		//MenuHandler menu = new MenuHandler();
 		String input = "";
 		
 		view.printWelcome();
-		input = menu.getInput();
+		input = getInput();
 		
 		while(true){
 			if(input.contains("menu")){
@@ -67,25 +66,44 @@ public class MenuHandler {
 			}else if(input.contains("q")){
 				view.quit();
 				return;
+			}else{
+				view.unrecognizedInput();				
 			}
+			
+			//clear previous input
+			input = "";
+			input = getInput();
 		}
 		
 	}
 	
 	public void displayAllTickets(){
-		APIHandler api = new APIHandler();
-		JSONObject ticketsJSON = api.getAllTickets();
-		api.displayTickets(ticketsJSON);
+		APIHandler api = new APIHandler(); //connect to api
+		
+		JSONObject ticketsJSON = api.getAllTickets(); //get the tickets
+		
+		api.displayTickets(ticketsJSON); //display the tickets
+		
 		return;
 	}
 	
 	public void displaySingleTicket(){
 		String id = "";
+		JSONObject ticketsJSON = new JSONObject();
+		
+		view.askTicketID();
 		id = getInput();
 		
-		APIHandler api = new APIHandler();
-		JSONObject ticketsJSON = api.getTicketByID(id);
-		api.displaySingleTicket(ticketsJSON);
+		APIHandler api = new APIHandler(); //connect to api
+		try{
+			 ticketsJSON = api.getTicketByID(id); //get the ticket
+		}catch(Exception e){
+			System.out.println("ERROR: Could not find ticket "+ id +". Please check the ID and try again.");
+			return;
+		}
+		
+		api.displaySingleTicket(ticketsJSON); //display the ticket
+		
 		return;
 	}
 }

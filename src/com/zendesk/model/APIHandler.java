@@ -24,7 +24,7 @@ public class APIHandler {
 	//Get ALL the tickets
 	public JSONObject getAllTickets(){
 		//connect to API and get the tickets in JSON format
-		System.out.println("SYSTEM STATUS: Fetching Tickets, please wait...");
+		System.out.println("SYSTEM STATUS: Fetching Ticket(s), please wait...");
 		JSONObject ticketsJSON = new JSONObject();
 		boolean multi = true;
 		
@@ -105,7 +105,7 @@ public class APIHandler {
 			//e.printStackTrace();
 			
 		} catch (IOException e) {
-			System.out.println("ERROR: Couldn't authenticate you.");
+			System.out.println("ERROR: Ooops! Something went wrong fetching your ticket(s).");
 			//e.printStackTrace();
 		}
 		
