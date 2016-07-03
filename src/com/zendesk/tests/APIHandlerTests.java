@@ -34,6 +34,18 @@ public class APIHandlerTests {
 		assertEquals(1, ticket.get("id"));	
 	}
 	
+	@Test
+	public void testFormatRequesterIDOutput(){
+		APIHandler api = new APIHandler();
+		int requester_id = -123456;
+		String str = "";
+		
+		str = api.formatRequesterID(requester_id);
+		
+		assertEquals(str, "123456");
+		
+	}
+	
 	/*
 	@Test
 	public void testformatDateError() throws ParseException{
