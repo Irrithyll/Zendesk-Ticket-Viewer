@@ -13,7 +13,8 @@ public class MainView {
 	private String unrecognizedInputErr = "Error: Unrecognized input, please enter your selection again: ";
 	private String askTicketID = "Please enter a ticket ID: ";
 	private String invalidTicketID = "Invalid ticket ID, please try again. (or type menu to return to the menu)";
-
+	private String invalidPageCommand = "Invalid page command, type n for next, b for back, menu for menu, q for quit:";
+	
 	public void printMainMenu(){
 		printMenuHeader();
 		printMenuOptions();
@@ -59,6 +60,10 @@ public class MainView {
 	
 	public void invalidTicket(){
 		System.out.println(invalidTicketID);
+	}
+	
+	public void invalidPageCommand(){
+		System.out.println(invalidPageCommand);
 	}
 
 	
