@@ -20,6 +20,7 @@ public class APIHandler {
 	//a date format to follow
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
 	private Scanner sc;
+	private static int PAGE_LIMIT = 25;
 
 	//Get ALL the tickets
 	public JSONObject getAllTickets(){
@@ -200,24 +201,46 @@ public class APIHandler {
 	}
 
 	
-	public void displayTickets(JSONObject ticketsJSON){
+	public int displayTickets(JSONObject ticketsJSON, int pageNumber){
 		JSONArray ticketsArr = new JSONArray();
 		ticketsArr = ticketsJSON.getJSONArray("tickets");
 		
-		int pageLimit = 25;
-		if(ticketsArr.length() < pageLimit){
-			pageLimit = ticketsArr.length();
+		int ticketCount = ticketsArr.length();
+		int pageTotal = ticketCount / PAGE_LIMIT;
+		
+		if(pageNumber > pageTotal){
+			//we've reached a page that doesn't exist
+			pageNumber = 1;
+		}else if(pageNumber < 1){
+			//we've reached a page that doesn't exist
+			pageNumber = pageTotal;
 		}
 		
-		for(int i = 0; i < pageLimit; i++){
+		int ticketsOnPage = 0;
+		int offset = (pageNumber - 1)*PAGE_LIMIT;
+		
+
+		
+		for(int i = 0+offset; i < PAGE_LIMIT+offset; i++){
+			//check we haven't run out of tickets to display
+			if(ticketsArr.getJSONObject(i).isNull("id")){
+				break;
+			}
 			//display the ticket information
 			printTicket(ticketsArr.getJSONObject(i).getInt("id"),
 					ticketsArr.getJSONObject(i).getString("status"),
 					ticketsArr.getJSONObject(i).getString("subject"),
 					ticketsArr.getJSONObject(i).getInt("requester_id"),
 					ticketsArr.getJSONObject(i).getString("updated_at"));
+			ticketsOnPage++;
 		}
-		return;
+		
+		System.out.println("---------------------------------");
+		System.out.println("Displaying " + ticketsOnPage + " tickets on Page " + pageNumber + " of " + pageTotal
+				+ " (n for next, b for prev, menu to return to menu)");
+		
+		
+		return pageNumber;
 	}
 	
 	public void displaySingleTicket(JSONObject ticketsJSON){
@@ -228,8 +251,8 @@ public class APIHandler {
 	}
 	
 	public void printTicket(int id, String status, String subject, int requester_id, String updated_at){
-		System.out.println("Ticket " + id +
-				" [" + status + "]" + 
+		System.out.println("[" + status + "]" +
+				" Ticket " + id + 
 				" subject '" + subject + "'" +
 				" opened by " + requester_id +
 				" updated " + updated_at);

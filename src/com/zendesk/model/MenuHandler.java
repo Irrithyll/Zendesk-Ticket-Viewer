@@ -80,23 +80,26 @@ public class MenuHandler {
 	public void displayAllTickets(){
 		APIHandler api = new APIHandler(); //connect to api
 		String input = "";
+		int pageNumber = 1;
 		
 		JSONObject ticketsJSON = api.getAllTickets(); //get the tickets
 		
-		api.displayTickets(ticketsJSON, 0); //display current ticket page
+		pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display current ticket page
 		
 		while(true){
 			input = getInput();
 			
 			if(input.contains("q") || input.contains("menu")){
-				break;
+				break; //return to menu
 			}else if(input.contains("n")){
-				api.displayTickets(ticketsJSON, +1); //display next ticket page
+				pageNumber++;
+				pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display next ticket page
 			}else if(input.contains("b")){
-				api.displayTickets(ticketsJSON, -1); //display previous ticket page
+				pageNumber--;
+				pageNumber = api.displayTickets(ticketsJSON, pageNumber); //display previous ticket page
 			}else{
 				view.invalidPageCommand();
-				api.displayTickets(ticketsJSON, 0); //display current ticket page
+				//api.displayTickets(ticketsJSON, offset); //display current ticket page
 			}
 			input = "";
 		}
