@@ -89,9 +89,14 @@ public class MenuHandler {
 		TicketView ticketV = new TicketView();
 		String input = "";
 		int pageNumber = 1;
+		JSONObject ticketsJSON = new JSONObject();
 		
-		JSONObject ticketsJSON = api.getAllTickets(); //get the tickets
-		
+		try{
+			ticketsJSON = api.getAllTickets(); //get the tickets
+		}catch(Exception e){
+			System.out.println("ERROR: Could not successfully get your tickets.");
+			return;
+		}
 		pageNumber = ticketV.displayTickets(ticketsJSON, pageNumber); //display current ticket page
 		
 		while(true){
