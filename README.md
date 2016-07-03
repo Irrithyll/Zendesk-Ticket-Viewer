@@ -17,13 +17,13 @@ Go to http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-213
 and download and install a relevant version for your system
 
 ### COMPILING THE PROGRAM 
-1) Navigate to the extracted project directory, where you should see folders like src, libs, ect
-2) (note: colons may need to be replaced by semi-colons on a mac cli) Type:
+1. Navigate to the extracted project directory, where you should see folders like src, libs, ect
+2. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
 javac -d bin -sourcepath src -cp libs/json-20160212.jar:libs/jsoup-1.8.3.jar src/com/zendesk/main/Main.java
-3) the program should have successfully compiled
+3. the program should have successfully compiled
 
 ### RUNNING THE PROGRAM
-1) If you have successfully compiled the program you can execute it
-2) (note: colons may need to be replaced by semi-colons on a mac cli) Type: 
+1. If you have successfully compiled the program you can execute it
+2. (note: colons may need to be replaced by semi-colons on a mac cli) Type: 
 java -cp bin:libs/json-20160212.jar:libs/jsoup-1.8.3.jar com.zendesk.main.Main to run the program
-3) Have fun~
+3. Have fun~
