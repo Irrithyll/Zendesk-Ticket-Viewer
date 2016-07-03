@@ -3,14 +3,14 @@ package com.zendesk.view;
 
 public class MainView {
 
-	String[] menuOptions = {"Display All Tickets","Display A Single Ticket","Quit Program"};
-	String welcomeMsg = "Hello and welcome to the Zendesk ticket viewer!";
-	String welcomeInstructions = "Please type menu to view the menu, or q to quit the program:";
-	String menuHeader = "---------------------------------\nMenu\n---------------------------------";
-	String menuInstructions = "Please type a number to select a menu option (or type q to quit):";
-	String confirmExit = "Are you sure you wish exit the program? (y / n):";
-	String quitMsg = "Program Exiting...";
-	String unrecognizedInputErr = "Error: Unrecognized input, please enter your selection again:";
+	private String[] menuOptions = {"Display All Tickets","Display A Single Ticket","Quit Program"};
+	private String welcomeMsg = "Hello and welcome to the Zendesk ticket viewer!";
+	private String welcomeInstructions = "Please type menu to view the menu, or q to quit the program:";
+	private String menuHeader = "---------------------------------\nMenu\n---------------------------------";
+	private String menuInstructions = "Please type a number to select a menu option (or type q to quit):";
+	//private String confirmExit = "Are you sure you wish exit the program? (y / n):";
+	private String quitMsg = "Program Exiting...";
+	private String unrecognizedInputErr = "Error: Unrecognized input, please enter your selection again:";
 
 	public void printMainMenu(){
 		printMenuHeader();

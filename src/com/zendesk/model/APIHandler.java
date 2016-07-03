@@ -13,14 +13,13 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 
 public class APIHandler {
 	//a date format to follow
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+	private Scanner sc;
 
 	//Get ALL the tickets
 	public JSONObject getAllTickets(){
@@ -93,9 +92,10 @@ public class APIHandler {
 			//get the data as an InputStream
 			InputStream inputStream = urlConnection.getInputStream();
 			
-			//convert data into String
-			Scanner s = new Scanner(inputStream).useDelimiter("\\A");
-			String result = s.hasNext() ? s.next() : "";
+			sc = new Scanner(inputStream);
+			sc = sc.useDelimiter("\\A");
+			String result = sc.hasNext() ? sc.next() : "";
+			sc.close();
 
 			//cast to a JSON object
 			ticketsJSON = new JSONObject(result);

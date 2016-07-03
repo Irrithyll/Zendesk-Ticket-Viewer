@@ -1,8 +1,6 @@
 package com.zendesk.main;
 
-import com.zendesk.model.APIHandler;
 import com.zendesk.model.MenuHandler;
-import com.zendesk.view.MainView;
 
 public class Main {
 	

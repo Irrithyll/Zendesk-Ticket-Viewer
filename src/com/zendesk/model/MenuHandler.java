@@ -11,6 +11,7 @@ public class MenuHandler {
 		Scanner sc = new Scanner(System.in);
 		String input = "";
 		input = sc.next();
+		sc.close();
 		return input;
 	}
 	
