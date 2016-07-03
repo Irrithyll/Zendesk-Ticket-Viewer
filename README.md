@@ -8,7 +8,7 @@ written by Sarah Giapitzakis
 Ensure that Java and Java C are installed on the machine
 (You will require jre1.8.0_65 or greater)
 You can check the current version of Java installed by typing:
-java -version 
+java -version
 And you can check the current Java C version installed by typing:
 which javac
 
@@ -16,14 +16,15 @@ which javac
 Go to http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 and download and install a relevant version for your system
 
-### COMPILING THE PROGRAM 
+### COMPILING THE PROGRAM
 1. Navigate to the extracted project directory, where you should see folders like src, libs, ect
-2. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
+2. type: mkdir bin (or system equivalent command to make a new directory named "bin")
+3. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
 javac -d bin -sourcepath src -cp libs/json-20160212.jar:libs/jsoup-1.8.3.jar src/com/zendesk/main/Main.java
-3. the program should have successfully compiled
+4. the program should have successfully compiled
 
 ### RUNNING THE PROGRAM
 1. If you have successfully compiled the program you can execute it
-2. (note: colons may need to be replaced by semi-colons on a mac cli) Type: 
+2. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
 java -cp bin:libs/json-20160212.jar:libs/jsoup-1.8.3.jar com.zendesk.main.Main to run the program
 3. Have fun~
