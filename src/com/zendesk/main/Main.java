@@ -1,11 +1,11 @@
 package com.zendesk.main;
 
-import com.zendesk.model.MenuHandler;
+import com.zendesk.controller.MenuController;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		MenuHandler menu = new MenuHandler();
+		MenuController menu = new MenuController();
 		menu.runWelcomeMenu();
 		
 	}

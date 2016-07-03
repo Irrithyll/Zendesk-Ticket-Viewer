@@ -1,21 +1,22 @@
-package com.zendesk.model;
+package com.zendesk.controller;
 import java.util.Scanner;
 
 import org.json.JSONObject;
 
+import com.zendesk.model.APIHandler;
 import com.zendesk.view.MainView;
 import com.zendesk.view.TicketView;
 
 /*
- * The MenuHandler handles all user input and menus. It calls on MainView 
+ * The MenuController handles all user input and menus. It calls on MainView 
  * and TicketView methods to display various relevant information to the 
  * user, as well as the APIHandler to actually fetch requested ticket
  * information.
  */
-public class MenuHandler {
+public class MenuController {
 	MainView view = new MainView();
 	private Scanner sc;
-	//MenuHandler menu = new MenuHandler();
+	//MenuController menu = new MenuController();
 	
 	public String getInput(){
 		sc = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class MenuHandler {
 	
 	public void runWelcomeMenu(){
 		MainView view = new MainView();
-		//MenuHandler menu = new MenuHandler();
+		//MenuController menu = new MenuController();
 		String input = "";
 		
 		view.printWelcome();
