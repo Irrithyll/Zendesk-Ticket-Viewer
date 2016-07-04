@@ -23,17 +23,17 @@ relative to your operating system.
 1. Navigate to the extracted project directory, where you should see folders like src, libs, ect
 2. type: mkdir bin (or system equivalent command to make a new directory named "bin")
 3. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
-javac -d bin -sourcepath src -cp libs/json-20160212.jar src/com/zendesk/main/Main.java
-4. the program should have successfully compiled
+3. javac -d bin -sourcepath src -cp libs/json-20160212.jar src/com/zendesk/main/Main.java
+5. the program should have successfully compiled
 (note: if you receive an error java: Command not found you may have incorrectly
   set the CLASSPATH or downloaded an old version,  type java -version to check)
 
 ### RUNNING THE PROGRAM
 1. If you have successfully compiled the program you can execute it
 2. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
-java -cp bin:libs/json-20160212.jar com.zendesk.main.Main
+3. java -cp bin:libs/json-20160212.jar com.zendesk.main.Main
 to run the program
-3. Have fun~
+4. Have fun~
 
 
 
