@@ -32,8 +32,7 @@ relative to your operating system.
 1. If you have successfully compiled the program you can execute it
 2. (note: colons may need to be replaced by semi-colons on a mac cli) Type:
 3. java -cp bin:libs/json-20160212.jar com.zendesk.main.Main
-to run the program
-4. Have fun~
+4. to run the program. Have fun~
 
 
 
