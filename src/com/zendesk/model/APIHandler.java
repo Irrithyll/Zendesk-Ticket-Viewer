@@ -196,9 +196,9 @@ public class APIHandler {
 	}
 	
 	
-	public String formatRequesterID(int requester_id){
+	public String formatRequesterID(int requesterID){
 		String strReqID = "";
-		strReqID = Integer.toString(requester_id);
+		strReqID = Integer.toString(requesterID);
 		strReqID = strReqID.replace("-", "");
 		return strReqID;
 		

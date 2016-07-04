@@ -57,12 +57,13 @@ public class TicketView {
 				ticketsJSON.getString("updated_at"));
 	}
 	
-	public void printTicket(int id, String status, String subject, int requester_id, String updated_at){
+	public void printTicket(int id, String status, String subject, int requesterID, String updatedAt){
 		System.out.println("[" + status + "]" +
 				" Ticket " + id + 
 				" subject '" + subject + "'" +
-				" opened by " + requester_id +
-				" updated " + updated_at);
+				" opened by " + requesterID +
+				" updated " + updatedAt);
+		
 	}
 	
 }
